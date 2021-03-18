@@ -3,6 +3,19 @@
 
 # Log file
 *.log
+*.err
+
+# Maven
+target/
+work/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode
 
 # BlueJ files
 *.ctxt
