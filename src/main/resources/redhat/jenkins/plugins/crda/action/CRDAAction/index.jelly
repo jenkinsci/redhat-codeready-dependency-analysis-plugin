@@ -1,0 +1,108 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+		<style>
+			table {
+			  font-family: arial, sans-serif;
+			  border-collapse: collapse;
+			  width: 30%;
+			}
+			
+			td, th {
+			  border: 1px solid #dddddd;
+			  text-align: left;
+			  padding: 8px;
+			}
+			
+			tr:nth-child(even) {
+			  background-color: #dddddd;
+			}
+		</style>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+						
+		<script type="text/javascript">
+			// Load google charts
+			google.charts.load('current', {'packages':['corechart']});
+			google.charts.setOnLoadCallback(drawChart);
+			
+			// Draw the chart and set the chart values
+			function drawChart() {
+			  var data = google.visualization.arrayToDataTable([
+			  ['Severity', 'Vulnerabilities'],
+			  ['Low', ${it.results.lowSeverity}],
+			  ['Medium', ${it.results.medSeverity}],
+			  ['High', ${it.results.highSeverity}],
+			  ['Critical', ${it.results.criticalSeverity}]
+			]);
+			  var options = {'title':'Severity of Vulnerabilities', 'width':450, 'height':300, pieSliceText: 'value',
+			  is3D: true, titleTextStyle: { fontSize: 18}, legend:{textStyle: {color: 'blue', fontSize: 15}}, fontSize:15,
+			  slices: {0: {color: '#cccc00'}, 1:{color: '#ffa500'}, 2:{color: '#ff0000'}, 3: {color: '#800000'}}};
+			  var pie = document.getElementById('vulnchart');
+			  if (${it.results.totalVuln} > 0) {
+				  pie.style.display = "block";							  
+				  var chart = new google.visualization.PieChart(pie);							  
+				  chart.draw(data, options);
+			  }
+			  else {
+			  	pie.style.display = "none";
+			  }
+			}
+		</script>
+    <l:layout title="CRDA Stack Report">
+        <l:side-panel>
+            <st:include page="sidepanel.jelly" it="${it.run}" optional="true" />
+        </l:side-panel>
+        <l:main-panel>        		
+            <h2>
+                Analysis Symmary
+            </h2>
+            <h3>Dependency Details</h3>
+            <table>
+            	<tr>
+						    <th>Keyword</th>
+						    <th>Value</th>
+						  </tr>
+						  <tr>
+						    <td>Total Scanned (Direct)</td>
+						    <td>${it.results.totalDirect}</td>
+						  </tr>
+						  <tr>
+						    <td>Total Scanned (Transitive)</td>
+						    <td>${it.results.totalTrans}</td>
+						  </tr>
+						  <tr>
+						    <td>Total Vulnerable (Direct)</td>
+						    <td>${it.results.vulnDeps}</td>
+						  </tr>
+						</table>
+						<h3>Vulnerability Details</h3>
+						<table>
+							<tr>
+						    <th>Keyword</th>
+						    <th>Value</th>
+						  </tr>
+						  <tr>
+						    <td>Total Found</td>
+						    <td>${it.results.totalVuln}</td>
+						  </tr>
+						  <tr>
+						    <td>Commonly Available</td>
+						    <td>${it.results.commonVuln}</td>
+						  </tr>
+						  <tr>
+						    <td>Unique to Snyk</td>
+						    <td>${it.results.uniqueVuln}</td>
+						  </tr>
+						</table>
+            <div id="vulnchart"></div>						
+            <div name="input">
+                <input type="button" onclick="location.href=generateURL();" value="CRDA Report (Details)" />
+            </div>
+            <script>
+                function generateURL(){
+                    var url = `${it.results.saUrl}`
+                    return url
+                }
+            </script>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
