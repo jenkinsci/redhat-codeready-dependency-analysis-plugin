@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    Add the ability to scan your dependencies and get an insight on the vulnerabilities, compliance, maintainability, popularity and more.
+</div>

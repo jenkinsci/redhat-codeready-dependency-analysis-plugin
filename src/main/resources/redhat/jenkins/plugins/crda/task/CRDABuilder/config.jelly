@@ -1,0 +1,21 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+    <f:entry title="${%Filepath}" field="file">
+        <div tooltip="Manifest File Path">
+            <f:textbox />
+        </div>
+    </f:entry>
+
+    <f:entry title="${%CRDA Key Id}" field="crdaKeyId">
+        <div tooltip="CRDA Key secret id">
+            <f:textbox />
+        </div>
+    </f:entry>
+    
+    <f:entry title="${%CRDA Cli Version}" field="cliVersion">
+        <div tooltip="CRDA CLI Version. If not provided, default value will be picked">
+            <f:textbox />
+        </div>
+    </f:entry>
+</j:jelly>

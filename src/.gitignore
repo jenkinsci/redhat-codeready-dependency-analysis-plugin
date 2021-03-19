@@ -1,0 +1,17 @@
+*.class
+
+# Maven
+target/
+work/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode
+
+.DS_Store
+*.log
+*.err
