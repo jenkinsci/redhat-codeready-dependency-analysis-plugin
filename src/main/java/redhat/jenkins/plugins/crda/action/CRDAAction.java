@@ -9,7 +9,6 @@ public class CRDAAction implements RunAction2 {
 
     private transient Run run;
     private String uuid;
-    private String saId;
     private Results results;
 
 
@@ -27,14 +26,9 @@ public class CRDAAction implements RunAction2 {
         return run;
     }
 
-    public CRDAAction(String uuid, String saId, JSONObject res) {
+    public CRDAAction(String uuid, JSONObject res) {
         this.uuid = uuid;
-        this.saId = saId;
         this.results = new Results(res);
-    }
-
-    public String getSaId() {
-        return saId;
     }
 
     public String getUuid() {

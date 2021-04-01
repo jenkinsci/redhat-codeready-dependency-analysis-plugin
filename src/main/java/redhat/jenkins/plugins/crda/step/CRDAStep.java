@@ -93,6 +93,7 @@ public final class CRDAStep extends Step {
 
             PrintStream logger = getContext().get(TaskListener.class).getLogger();
             logger.println("----- CRDA Analysis Begins -----");
+            String crdaUuid = "";
             
             String filePath = step.getFile();
             if (filePath == null) {
@@ -100,8 +101,15 @@ public final class CRDAStep extends Step {
                 return Config.EXIT_FAILED;
             }
             
-            CRDAKey crdaKey = Utils.getCRDACredential(step.crdaKeyId);
-            if (crdaKey == null) {
+            
+	    	crdaUuid = Utils.getCRDACredential(step.crdaKeyId);
+	    	if (crdaUuid == null) {
+	    		logger.println("CRDA Key id '" + step.crdaKeyId + "' was not found in the credentials. Please configure the build properly and retry.");
+	            return Config.EXIT_FAILED;
+	    	}
+            
+            
+            if(crdaUuid.equals("")) {
             	logger.println("CRDA Key id '" + step.crdaKeyId + "' was not found in the credentials. Please configure the build properly and retry.");
                 return Config.EXIT_FAILED;
             }
@@ -120,8 +128,6 @@ public final class CRDAStep extends Step {
             		cliVersion = cliVersion.replace("v", "");
             	}
             }            
-            
-            String crdaUuid = crdaKey.getKey().getPlainText();
             
             CRDAInstallation cri = new CRDAInstallation();
             String baseDir = cri.install(cliVersion, logger);
@@ -146,6 +152,8 @@ public final class CRDAStep extends Step {
             
             Iterator<String> keys = res.keys();
 	        String key;
+	        String exitStatus = Config.EXIT_SUCCESS;
+	        
 	        while(keys.hasNext()) {
 	            key = keys.next();
 	            logger.println("\t" + key.replace("_", " ") + " : " + res.get(key));
@@ -154,9 +162,9 @@ public final class CRDAStep extends Step {
 	        logger.println("Click on the CRDA Stack Report icon to view the detailed report.");
             
             Run run = getContext().get(Run.class);
-            run.addAction(new CRDAAction(crdaUuid, "66c6afdce5bb45aca860f5c343f7368f", res));
+            run.addAction(new CRDAAction(crdaUuid, res));
             logger.println("----- CRDA Analysis Ends ----");
-            return Config.EXIT_SUCCESS;
+            return res.getInt("total_vulnerabilites") == 0 ? Config.EXIT_SUCCESS : Config.EXIT_VULNERABLE;
         }     
 
         private static final long serialVersionUID = 1L;

@@ -3,29 +3,43 @@ package redhat.jenkins.plugins.crda.task;
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
 import hudson.model.Label;
+import redhat.jenkins.plugins.crda.utils.CRDAInstallation;
+import redhat.jenkins.plugins.crda.utils.Utils;
+
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
-
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.runner.RunWith;
+/*
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Utils.class)
+@PowerMockIgnore("javax.net.ssl.*")*/
 public class CRDABuilderTest {
-
+	/*
     @Rule
     public JenkinsRule jenkins = new JenkinsRule();
-
-    final String name = "Bobby";
-
-    /*
+    
 
     @Test
     public void testConfigRoundtrip() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        project.getBuildersList().add(new HelloWorldBuilder(name));
+        CRDABuilder crdb = new CRDABuilder("/tmp/pom.xml", "ede6d550-b75e-4a2e-bfac-21d38e77b48b", "v0.0.1");
+        PowerMockito.mockStatic(Utils.class);
+        PowerMockito.when(Utils.getCRDACredential("123456789")).thenReturn("1234");
+        //Mockito.when(CRDAInstallation.install("v0.0.1", System.out)).thenReturn("1234");
+        project.getBuildersList().add(crdb);
         project = jenkins.configRoundtrip(project);
-        jenkins.assertEqualDataBoundBeans(new HelloWorldBuilder(name), project.getBuildersList().get(0));
+        System.out.println(project.getBuildersList());
     }
+    
+    
 
     @Test
     public void testConfigRoundtripFrench() throws Exception {
