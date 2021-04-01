@@ -36,7 +36,53 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <dependencies>
+		  <dependencies>
+		  	<dependency>
+			    <groupId>net.bytebuddy</groupId>
+			    <artifactId>byte-buddy</artifactId>
+			    <version>1.10.20</version>
+			    <scope>test</scope>
+				</dependency>
+				<dependency>
+			    <groupId>net.bytebuddy</groupId>
+			    <artifactId>byte-buddy-agent</artifactId>
+			    <version>1.10.20</version>
+			    <scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.powermock</groupId>
+					<artifactId>powermock-api-mockito2</artifactId>
+					<version>1.7.0RC2</version>
+				</dependency>
+				<dependency>
+					<groupId>org.powermock</groupId>
+					<artifactId>powermock-module-junit4</artifactId>
+					<version>1.7.0</version>
+				</dependency>
+			  <dependency>
+			    <groupId>org.powermock</groupId>
+			    <artifactId>powermock-core</artifactId>
+			    <version>1.7.0</version>
+			    <scope>test</scope>
+				</dependency>
+				<dependency>
+			    <groupId>org.powermock</groupId>
+			    <artifactId>powermock-module-junit4-rule</artifactId>
+			    <version>1.7.0</version>
+			    <scope>test</scope>
+				</dependency>
+			  <dependency>
+			    <groupId>org.mockito</groupId>
+			    <artifactId>mockito-core</artifactId>
+			    <version>2.9.0</version>
+			    <scope>test</scope>
+				</dependency>
+		  	<dependency>
+			    <groupId>org.objenesis</groupId>
+			    <artifactId>objenesis</artifactId>
+			    <version>3.1</version>
+			    <scope>test</scope>
+				</dependency>
     		<dependency>
 				  <groupId>org.codehaus.plexus</groupId>
 				  <artifactId>plexus-archiver</artifactId>
@@ -82,11 +128,6 @@
             <version>2.4</version>
         </dependency>
          <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-step-api</artifactId>
-            <version>${jenkins-version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-step-api</artifactId>
             <version>${jenkins-version}</version>

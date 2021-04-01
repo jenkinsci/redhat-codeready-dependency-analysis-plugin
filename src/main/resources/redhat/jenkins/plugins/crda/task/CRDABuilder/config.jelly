@@ -14,7 +14,7 @@
     </f:entry>
     
     <f:entry title="${%CRDA Cli Version}" field="cliVersion">
-        <div tooltip="CRDA CLI Version. If not provided, default value will be picked">
+        <div tooltip="CRDA CLI Version (vx.x.x). If not provided, default value will be picked">
             <f:textbox />
         </div>
     </f:entry>

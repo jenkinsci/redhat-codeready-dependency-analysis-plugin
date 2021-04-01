@@ -66,9 +66,10 @@ public class Utils {
 		return os.toLowerCase().contains("mac");
 	}
 	
-	public static CRDAKey getCRDACredential(String id) {
-        return CredentialsMatchers.firstOrNull(lookupCredentials(CRDAKey.class, Jenkins.getInstanceOrNull(), ACL.SYSTEM, Collections.emptyList()),
+	public static String getCRDACredential(String id) throws IOException, InterruptedException {
+		CRDAKey crdaKey = CredentialsMatchers.firstOrNull(lookupCredentials(CRDAKey.class, Jenkins.getInstanceOrNull(), ACL.SYSTEM, Collections.emptyList()),
                                                withId(id));
+		return (crdaKey != null)?crdaKey.getKey().getPlainText():null;
     }
 	
 	public static boolean is32() {

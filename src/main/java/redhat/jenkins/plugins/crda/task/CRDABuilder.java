@@ -75,8 +75,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
     	PrintStream logger = listener.getLogger();
     	logger.println("----- CRDA Analysis Begins -----");
-        CRDAKey crdaKey = Utils.getCRDACredential(this.getCrdaKeyId());
-        String crdaUuid = crdaKey.getKey().getPlainText();
+    	String crdaUuid = Utils.getCRDACredential(this.getCrdaKeyId());
         
         String cliVersion = this.getCliVersion();
         if (cliVersion == null) {
@@ -119,12 +118,10 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
 	        
 	        logger.println("Click on the CRDA Stack Report icon to view the detailed report.");
 	        logger.println("----- CRDA Analysis Ends ----");
-	        String saId = "66c6afdce5bb45aca860f5c343f7368f";
-	        run.addAction(new CRDAAction(crdaUuid, saId, res));
+	        run.addAction(new CRDAAction(crdaUuid, res));
         }
     }
 
-    @Symbol("greet")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 

@@ -122,7 +122,7 @@ public class CRDAInstallation {
 	    return false;
 	}
 	
-	private void extractArtifact(String destDir, String fileZip) {
+	public void extractArtifact(String destDir, String fileZip) {
 		TarGZipUnArchiver ua = new TarGZipUnArchiver(new File(fileZip));
 		ua.setDestDirectory(new File(destDir));
 		ua.enableLogging(new ConsoleLogger(ConsoleLogger.LEVEL_DISABLED, "console"));
