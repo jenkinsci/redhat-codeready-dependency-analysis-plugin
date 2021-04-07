@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 
-import org.jenkinsci.Symbol;
 import org.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
@@ -25,9 +24,6 @@ import hudson.tasks.Builder;
 import hudson.util.FormValidation;
 import jenkins.tasks.SimpleBuildStep;
 import redhat.jenkins.plugins.crda.action.CRDAAction;
-import redhat.jenkins.plugins.crda.credentials.CRDAKey;
-import redhat.jenkins.plugins.crda.utils.CRDAInstallation;
-import redhat.jenkins.plugins.crda.utils.CommandExecutor;
 import redhat.jenkins.plugins.crda.utils.Config;
 import redhat.jenkins.plugins.crda.utils.Utils;
 
@@ -69,7 +65,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     @DataBoundSetter
     public void setCrdakeyid(String crdaKeyId) {
         this.crdaKeyId = crdaKeyId;
-    }
+    }   
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
@@ -86,8 +82,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
         	cliVersion = cliVersion.replace("v", "");
         }
         
-        CRDAInstallation cri = new CRDAInstallation();
-        String baseDir = cri.install(cliVersion, logger);
+        String baseDir = Utils.doInstall(cliVersion, logger);
         if (baseDir.equals("Failed")) {
         	logger.println("Error during installation process.");
         	return;
@@ -98,8 +93,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
         logger.println("Analysis Begins");
         Map<String, String> envs = new HashMap<>();
         envs.put("CRDA_KEY", crdaUuid);
-        String results = new CommandExecutor().execute(cmd, logger, envs);
-        
+        String results = Utils.doExecute(cmd, logger, envs);        
         
         if (results.equals("") || results.equals("0") || ! Utils.isJSONValid(results)) {
         	logger.println("Analysis returned no results.");
@@ -117,7 +111,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
 	        }
 	        
 	        logger.println("Click on the CRDA Stack Report icon to view the detailed report.");
-	        logger.println("----- CRDA Analysis Ends ----");
+	        logger.println("----- CRDA Analysis Ends -----");
 	        run.addAction(new CRDAAction(crdaUuid, res));
         }
     }

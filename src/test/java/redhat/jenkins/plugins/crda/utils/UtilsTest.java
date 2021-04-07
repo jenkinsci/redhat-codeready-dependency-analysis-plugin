@@ -17,7 +17,7 @@ public class UtilsTest {
 		assertTrue(Utils.is64());
 		assertFalse(Utils.is32());
 		
-		String validJson = "{ 'a': 'b'}";
+		String validJson = "{ 'a_b': 10}";
 		assertTrue(Utils.isJSONValid(validJson));
 		
 		String invalidJson = "abcdefgh";

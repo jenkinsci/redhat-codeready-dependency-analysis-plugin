@@ -4,9 +4,11 @@ import static com.cloudbees.plugins.credentials.CredentialsMatchers.withId;
 import static com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +20,16 @@ import hudson.security.ACL;
 import jenkins.model.Jenkins;
 import redhat.jenkins.plugins.crda.credentials.CRDAKey;
 
-public class Utils {
+public class Utils {	
+
+	public static String doInstall(String cliVersion, PrintStream logger) {
+    	CRDAInstallation cri = new CRDAInstallation();
+    	return cri.install(cliVersion, logger);
+    }
+	
+	public static String doExecute(String cmd, PrintStream logger, Map<String, String> envs) {
+		return new CommandExecutor().execute(cmd, logger, envs);
+    }
 	
 	public static boolean isJSONValid(String test) {
 	    try {
