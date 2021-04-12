@@ -28,8 +28,8 @@ public class CRDAStepTest {
 	@Rule
     public JenkinsRule jenkins = new JenkinsRule();
     
-    public String retStr = "{'total_scanned_dependencies': 0, 'total_scanned_transitives': 0, 'total_vulnerabilites': 0,"
-    		+ "'commonly_known_vulnerabilites': 0, 'vulnerabilities_unique_to_synk': 0, 'direct_vulnerable_dependencies': 0,"
+    public String retStr = "{'total_scanned_dependencies': 0, 'total_scanned_transitives': 0, 'total_vulnerabilities': 0,"
+    		+ "'publicly_available_vulnerabilities': 0, 'vulnerabilities_unique_to_synk': 0, 'direct_vulnerable_dependencies': 0,"
     		+ "'low_vulnerabilities': 0, 'medium_vulnerabilities': 0, 'high_vulnerabilities': 0, 'critical_vulnerabilities': 0,"
     		+ "'report_link': 'http://www.example.com'}";
 	

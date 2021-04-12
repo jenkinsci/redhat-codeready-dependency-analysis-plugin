@@ -19,8 +19,8 @@ public class Results {
 	public Results(JSONObject res) {
 		this.totalDirect = res.getInt("total_scanned_dependencies");
 		this.totalTrans = res.getInt("total_scanned_transitives");
-		this.totalVuln = res.getInt("total_vulnerabilites");
-		this.commonVuln = res.getInt("commonly_known_vulnerabilites");
+		this.totalVuln = res.getInt("total_vulnerabilities");
+		this.commonVuln = res.getInt("publicly_available_vulnerabilities");
 		this.uniqueVuln = res.getInt("vulnerabilities_unique_to_synk");
 		this.vulnDeps = res.getInt("direct_vulnerable_dependencies");
 		this.lowSeverity = res.getInt("low_vulnerabilities");
