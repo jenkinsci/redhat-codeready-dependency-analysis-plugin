@@ -8,7 +8,7 @@
 	  </parent>
     
     <groupId>redhat.jenkins.plugins</groupId>
-    <artifactId>crda-dependency-analysis</artifactId>
+    <artifactId>redhat-codeready-dependency-analysis</artifactId>
     <version>${revision}${changelist}</version>
     <packaging>hpi</packaging>
     <properties>
@@ -19,7 +19,7 @@
        <jenkins.version>2.235.1</jenkins.version>
        <jenkins-version>2.23</jenkins-version>   
     </properties>
-    <name>CRDA Dependency Analysis Plugin</name>
+    <name>Redhat Codeready Dependency Analysis Plugin</name>
     <!-- <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url> -->
     <url>https://fabric8-analytics.github.io/</url>
     <description>Add the ability to scan your dependencies and get an insight on the vulnerabilities, compliance, maintainability, popularity and more.</description>

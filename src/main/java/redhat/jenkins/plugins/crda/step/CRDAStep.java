@@ -159,7 +159,7 @@ public final class CRDAStep extends Step {
             Run run = getContext().get(Run.class);
             run.addAction(new CRDAAction(crdaUuid, res));
             logger.println("----- CRDA Analysis Ends -----");
-            return res.getInt("total_vulnerabilites") == 0 ? Config.EXIT_SUCCESS : Config.EXIT_VULNERABLE;
+            return res.getInt("total_vulnerabilities") == 0 ? Config.EXIT_SUCCESS : Config.EXIT_VULNERABLE;
         }     
 
         private static final long serialVersionUID = 1L;

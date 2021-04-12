@@ -85,7 +85,7 @@
 						    <td>${it.results.totalVuln}</td>
 						  </tr>
 						  <tr>
-						    <td>Commonly Available</td>
+						    <td>Publicly Available</td>
 						    <td>${it.results.commonVuln}</td>
 						  </tr>
 						  <tr>

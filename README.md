@@ -1,18 +1,18 @@
-# crda-dependency-analysis
-CRDA dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA is a platform which acts as a one stop solution to get the details of your dependency stack. It gives you details on Vulnerability (**Powered by Snyk**), License Compatibility, Popularity, Maintainability and much more.
+# Redhat Codeready Dependency Analysis
+Readhat codeready dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA (codeready dependency analytics) is a platform which acts as a one stop solution to get the details of your dependency stack. It gives you details on Vulnerability (**Powered by Snyk**), License Compatibility, Popularity, Maintainability and much more.
 
 The plugin can be used in jenkins as a pipeline task or as a build step.
 
-## How to use crda dependency analysis plugin
+## How to use the plugin
 ### Admin Steps
 ### 1.  Generate CRDA Key
 - Download the CRDA CLI tool on your system. Click [here](https://github.com/fabric8-analytics/cli-tools/releases "here") to download.
 - Follow the instructions for the installation and run `crda auth` command to generate the crda key. Copy this key.
-- Compatible CLI versions >= v0.1.0
+- Compatible CLI versions >= v0.1.1
 
-### 2. Install the crda-dependency-analysis jenkins plugin
+### 2. Install the redhat-codeready-dependency-analysis jenkins plugin
 - Goto the jenkins dashboard -> Manage Jenkins -> Manage Plugins.
-- Seach for `crda-dependency-analysis` and install.
+- Seach for `redhat-codeready-dependency-analysis` and install.
 
 ### 3. CRDA credentials
 - Goto jenkins dashboard -> Manage Jenkins -> Manage Credentials. Select the global domain -> Add Credentials.
