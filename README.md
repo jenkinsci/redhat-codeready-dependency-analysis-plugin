@@ -1,5 +1,13 @@
+![openshift](https://user-images.githubusercontent.com/37098367/114392384-522d8480-9bb6-11eb-8cd8-cdc6191f6a79.png)
+
 # Redhat Codeready Dependency Analysis
-Readhat codeready dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA (codeready dependency analytics) is a platform which acts as a one stop solution to get the details of your dependency stack. It gives you details on Vulnerability (**Powered by Snyk**), License Compatibility, Popularity, Maintainability and much more.
+Readhat codeready dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA (codeready dependency analytics) is powered by **Snyk Intel Vulnerability DB**, it is the most advanced and accurate open source vulnerability database in the industry. That adds value with the latest, fastest and more number of vulnerabilities derived from numerous sources.
+
+'CRDA Report' with Insights about your application dependencies:
+- Flags a security vulnerability(CVE) and suggests a remedial version
+- Shows Github popularity metrics along with latest version
+- Suggests a project level license, check for conflicts between dependency licences
+- AI based guidance for additional, alternative dependencies
 
 The plugin can be used in jenkins as a pipeline task or as a build step.
 
