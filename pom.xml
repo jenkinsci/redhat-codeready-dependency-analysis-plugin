@@ -15,7 +15,7 @@
        <revision>1.0</revision>
        <changelist>-SNAPSHOT</changelist>
        <java.level>8</java.level>
-       <gitHubRepo>jenkinsci/${project.artifactId}</gitHubRepo>
+       <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
        <jenkins.version>2.235.1</jenkins.version>
        <jenkins-version>2.23</jenkins-version>   
     </properties>
