@@ -1,5 +1,22 @@
+/* Copyright © 2021 Red Hat Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Author: Yusuf Zainee <yzainee@redhat.com>
+*/
+
 package redhat.jenkins.plugins.crda.step;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,6 +26,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletException;
+
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.workflow.steps.Step;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
@@ -16,14 +35,20 @@ import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
 import org.jenkinsci.plugins.workflow.steps.StepExecution;
 import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 import org.json.JSONObject;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 
 import hudson.Extension;
 import hudson.FilePath;
+import hudson.model.Item;
 import hudson.model.Run;
 import hudson.model.TaskListener;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
 import redhat.jenkins.plugins.crda.action.CRDAAction;
+import redhat.jenkins.plugins.crda.task.CRDABuilder.BuilderDescriptorImpl;
 import redhat.jenkins.plugins.crda.utils.Config;
 import redhat.jenkins.plugins.crda.utils.Utils;
 
@@ -170,7 +195,33 @@ public final class CRDAStep extends Step {
     @Symbol("crdaAnalysis")
     public static class DescriptorImpl extends StepDescriptor {
 
-        @Override
+    	private final BuilderDescriptorImpl builderDescriptor;
+
+        public DescriptorImpl() {
+          builderDescriptor = new BuilderDescriptorImpl();
+        }
+        
+        @SuppressWarnings("unused")
+        public ListBoxModel doFillCrdaKeyIdItems(@AncestorInPath Item item, @QueryParameter String crdaKeyId) {
+          return builderDescriptor.doFillCrdaKeyIdItems(item, crdaKeyId);
+        }
+        
+        @SuppressWarnings("unused")
+        public FormValidation doCheckCrdaKeyId(@QueryParameter String crdaKeyId) throws IOException, ServletException {
+          return builderDescriptor.doCheckCrdaKeyId(crdaKeyId);
+        }
+        
+        @SuppressWarnings("unused")
+        public FormValidation doCheckFile(@QueryParameter String file) throws IOException, ServletException {
+          return builderDescriptor.doCheckFile(file);
+        }
+        
+        @SuppressWarnings("unused")
+        public FormValidation doCheckCliVersion(@QueryParameter String cliVersion) throws IOException, ServletException {
+          return builderDescriptor.doCheckCliVersion(cliVersion);
+        }
+    	
+    	@Override
         public String getFunctionName() {
             return "crdaAnalysis";
         }
