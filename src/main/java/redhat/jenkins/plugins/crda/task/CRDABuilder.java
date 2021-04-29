@@ -1,3 +1,19 @@
+/* Copyright © 2021 Red Hat Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Author: Yusuf Zainee <yzainee@redhat.com>
+*/
+
 package redhat.jenkins.plugins.crda.task;
 
 import java.io.IOException;
@@ -13,6 +29,13 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 
+import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
+import com.cloudbees.plugins.credentials.CredentialsProvider;
+import org.kohsuke.stapler.AncestorInPath;
+import hudson.model.Item;
+import jenkins.model.Jenkins;
+import hudson.security.ACL;
+
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -22,10 +45,12 @@ import hudson.model.TaskListener;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
 import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
 import jenkins.tasks.SimpleBuildStep;
 import redhat.jenkins.plugins.crda.action.CRDAAction;
 import redhat.jenkins.plugins.crda.utils.Config;
 import redhat.jenkins.plugins.crda.utils.Utils;
+import redhat.jenkins.plugins.crda.credentials.CRDAKey;
 
 public class CRDABuilder extends Builder implements SimpleBuildStep {
 
@@ -72,7 +97,6 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     	PrintStream logger = listener.getLogger();
     	logger.println("----- CRDA Analysis Begins -----");
     	String crdaUuid = Utils.getCRDACredential(this.getCrdaKeyId());
-        
         String cliVersion = this.getCliVersion();
         if (cliVersion == null) {
         	cliVersion = Config.DEFAULT_CLI_VERSION;
@@ -117,9 +141,13 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     }
 
     @Extension
-    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
+    public static final class BuilderDescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public FormValidation doCheckFile(@QueryParameter String file)
+        public BuilderDescriptorImpl() {
+        	load();
+        }
+    	
+    	public FormValidation doCheckFile(@QueryParameter String file)
                 throws IOException, ServletException {
             if (file.length() == 0){
                 return FormValidation.error(Messages.CRDABuilder_DescriptorImpl_errors_missingFileName());
@@ -132,9 +160,6 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
             int len = crdaKeyId.length();
             if (len == 0){
                 return FormValidation.error(Messages.CRDABuilder_DescriptorImpl_errors_missingUuid());
-            }
-            if (len > 0 && len < 36){
-                return FormValidation.error(Messages.CRDABuilder_DescriptorImpl_errors_incorrectUuid());
             }
             return FormValidation.ok();
         }
@@ -149,6 +174,25 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
             	return FormValidation.error(Messages.CRDABuilder_DescriptorImpl_errors_incorrectCli());
         	}
         	return FormValidation.ok();        	
+        }
+        
+        @SuppressWarnings("deprecation")
+		public ListBoxModel doFillCrdaKeyIdItems(@AncestorInPath Item item, @QueryParameter String crdaKeyId) {
+            StandardListBoxModel model = new StandardListBoxModel();
+            if (item == null) {
+              
+			Jenkins jenkins = Jenkins.getInstance();
+              if (!jenkins.hasPermission(Jenkins.ADMINISTER)) {
+                return model.includeCurrentValue(crdaKeyId);
+              }
+            } else {
+              if (!item.hasPermission(Item.EXTENDED_READ) && !item.hasPermission(CredentialsProvider.USE_ITEM)) {
+                return model.includeCurrentValue(crdaKeyId);
+              }
+            }
+            return model.includeEmptyValue()
+                        .includeAs(ACL.SYSTEM, item, CRDAKey.class)
+                        .includeCurrentValue(crdaKeyId);
         }
 
         @Override
