@@ -56,12 +56,14 @@ public final class CRDAStep extends Step {
     private String file;
     private String crdaKeyId;
     private String cliVersion;
+    private boolean consentTelemetry = false;
 
     @DataBoundConstructor
-    public CRDAStep(String file, String crdaKeyId, String cliVersion) {
+    public CRDAStep(String file, String crdaKeyId, String cliVersion, boolean consentTelemetry) {
         this.file = file;
         this.crdaKeyId = crdaKeyId;
         this.cliVersion = cliVersion;
+        this.consentTelemetry = consentTelemetry;
     }
 
     public String getFile() {
@@ -87,8 +89,17 @@ public final class CRDAStep extends Step {
     }
 
     @DataBoundSetter
-    public void setCrdakeyid(String crdaKeyId) {
+    public void setCrdaKeyId(String crdaKeyId) {
         this.crdaKeyId = crdaKeyId;
+    }
+    
+    public boolean getConsentTelemetry() {
+        return consentTelemetry;
+    }
+
+    @DataBoundSetter
+    public void setConsentTelemetry(boolean consentTelemetry) {
+        this.consentTelemetry = consentTelemetry;
     }
 
     @Override
@@ -154,12 +165,13 @@ public final class CRDAStep extends Step {
             String baseDir = Utils.doInstall(cliVersion, logger);
             if (baseDir.equals("Failed"))
             	return Config.EXIT_FAILED;
-            
+            logger.println("Contribution towards anonymous usage stats is set to " + step.getConsentTelemetry());
             String cmd = Config.CLI_CMD.replace("filepath", filePath);
             cmd = baseDir + cmd;
             logger.println("Analysis Begins");
             Map<String, String> envs = new HashMap<>();
             envs.put("CRDA_KEY", crdaUuid);
+            envs.put("CONSENT_TELEMETRY", String.valueOf(step.getConsentTelemetry()));
             String results = Utils.doExecute(cmd, logger, envs);
             
             
