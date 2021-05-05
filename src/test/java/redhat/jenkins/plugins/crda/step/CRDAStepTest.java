@@ -45,7 +45,7 @@ public class CRDAStepTest {
         PowerMockito.when(Utils.isJSONValid(retStr)).thenReturn(true);
         String pipelineScript
                 = "node {\n"
-                + "  String msg = crdaAnalysis file:'/tmp/package.json', crdaKeyId:'ede6d550-b75e-4a2e-bfac-22222e77b48b', cliVersion:'v0.0.1'\n" 
+                + "  String msg = crdaAnalysis file:'/tmp/package.json', crdaKeyId:'ede6d550-b75e-4a2e-bfac-22222e77b48b', cliVersion:'v0.0.1', consentTelemetry:false\n" 
                 + "    echo msg \n"
                 + "}";
         job.setDefinition(new CpsFlowDefinition(pipelineScript, true));

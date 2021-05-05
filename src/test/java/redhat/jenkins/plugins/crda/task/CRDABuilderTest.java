@@ -36,7 +36,7 @@ public class CRDABuilderTest {
     @Test
     public void testCRDATask() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        CRDABuilder crdb = new CRDABuilder("/tmp/pom.xml", "ede6d550-b75e-4a2e-bfac-22222e77b48b", "v0.0.1");
+        CRDABuilder crdb = new CRDABuilder("/tmp/pom.xml", "ede6d550-b75e-4a2e-bfac-22222e77b48b", "v0.0.1", false);
         CRDABuilder mockObj = PowerMockito.mock(crdb.getClass());
         PowerMockito.mockStatic(Utils.class);
         PowerMockito.when(Utils.getCRDACredential("ede6d550-b75e-4a2e-bfac-22222e77b48b")).thenReturn("1234");

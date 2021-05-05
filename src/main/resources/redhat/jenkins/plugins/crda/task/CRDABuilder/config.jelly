@@ -19,18 +19,24 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
 
     <f:entry title="${%Filepath}" field="file">
-        <div tooltip="Manifest File Path">
-            <f:textbox />
-        </div>
+      <div tooltip="Manifest File Path">
+        <f:textbox />
+      </div>
     </f:entry>
 
     <f:entry title="${%CRDA Key Id}" field="crdaKeyId">
-        <c:select/>
+      <c:select/>
     </f:entry>
     
     <f:entry title="${%CRDA Cli Version}" field="cliVersion">
-        <div tooltip="CRDA CLI Version (vx.x.x). If not provided, default value will be picked">
-            <f:textbox />
-        </div>
+      <div tooltip="CRDA CLI Version (vx.x.x). If not provided, default value will be picked">
+        <f:textbox />
+      </div>
     </f:entry>
+    
+    <f:entry title="Contribute towards anonymous usage statistics" field="consentTelemetry">
+	    <div tooltip="Enable/Disable the collection of usage statistics">
+	    	<f:checkbox default="false"/>
+	    </div>
+	  </f:entry>
 </j:jelly>

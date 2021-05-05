@@ -57,12 +57,14 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     private String file;
     private String crdaKeyId;
     private String cliVersion;
+    private boolean consentTelemetry = false;
 
     @DataBoundConstructor
-    public CRDABuilder(String file, String crdaKeyId, String cliVersion) {
+    public CRDABuilder(String file, String crdaKeyId, String cliVersion, boolean consentTelemetry) {
         this.file = file;
         this.crdaKeyId = crdaKeyId;
         this.cliVersion = cliVersion;
+        this.consentTelemetry = consentTelemetry;
     }
 
     public String getFile() {
@@ -88,9 +90,18 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     }
 
     @DataBoundSetter
-    public void setCrdakeyid(String crdaKeyId) {
+    public void setCrdaKeyId(String crdaKeyId) {
         this.crdaKeyId = crdaKeyId;
-    }   
+    }
+    
+    public boolean getConsentTelemetry() {
+        return consentTelemetry;
+    }
+
+    @DataBoundSetter
+    public void setConsentTelemetry(boolean consentTelemetry) {
+        this.consentTelemetry = consentTelemetry;
+    } 
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
@@ -114,9 +125,11 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
         
         String cmd = Config.CLI_CMD.replace("filepath", this.getFile());
         cmd = baseDir + cmd;
-        logger.println("Analysis Begins");
+        logger.println("Contribution towards anonymous usage stats is set to " + this.getConsentTelemetry());
+        logger.println("Analysis Begins");        
         Map<String, String> envs = new HashMap<>();
         envs.put("CRDA_KEY", crdaUuid);
+        envs.put("CONSENT_TELEMETRY", String.valueOf(this.getConsentTelemetry()));
         String results = Utils.doExecute(cmd, logger, envs);        
         
         if (results.equals("") || results.equals("0") || ! Utils.isJSONValid(results)) {

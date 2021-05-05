@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CommandExecutor {
@@ -53,12 +54,10 @@ public class CommandExecutor {
 		if (envs != null) {
 			processBuilder = this.setEnv(processBuilder, envs);
 		}
-		
 		processBuilder.command(this.getPrompt(), this.getCmd(), command);
 		 try {
-
 			 	processBuilder.redirectErrorStream(true);
-			 	Process process = processBuilder.start();			 	
+			 	Process process = processBuilder.start();
 
 		        StringBuilder output = new StringBuilder();
 		        InputStreamReader isr = new InputStreamReader(process.getInputStream(), "UTF-8");
@@ -66,7 +65,7 @@ public class CommandExecutor {
 
 		        String line;
 		        while ((line = reader.readLine()) != null) {
-		            output.append(line + "\n");
+		        	output.append(line + "\n");
 		        }
 
 		        reader.close();
