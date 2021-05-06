@@ -24,11 +24,11 @@
       </div>
     </f:entry>
 
-    <f:entry title="${%CRDA Key Id}" field="crdaKeyId">
+    <f:entry title="${%Key Id}" field="crdaKeyId">
       <c:select/>
     </f:entry>
     
-    <f:entry title="${%CRDA Cli Version}" field="cliVersion">
+    <f:entry title="${%Cli Version}" field="cliVersion">
       <div tooltip="CRDA CLI Version (vx.x.x). If not provided, default value will be picked">
         <f:textbox />
       </div>

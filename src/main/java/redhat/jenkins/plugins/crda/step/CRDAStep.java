@@ -240,7 +240,7 @@ public final class CRDAStep extends Step {
 
         @Override
         public String getDisplayName() {
-            return "Invoke CRDA Analysis";
+            return "Invoke Red Hat Codeready Dependency Analysis (CRDA)";
         }
 
         @Override
