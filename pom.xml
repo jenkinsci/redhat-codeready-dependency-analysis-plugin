@@ -196,7 +196,7 @@
     </licenses>
     <scm>
         <connection>scm:git:ssh://github.com/${gitHubRepo}.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:${gitHubRepo}.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/${gitHubRepo}.git</developerConnection>
         <url>https://github.com/${gitHubRepo}</url>
         <tag>redhat-codeready-dependency-analysis-0.1.0</tag>
     </scm>
