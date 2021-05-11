@@ -2,7 +2,7 @@
 ***
 
 # Table of Contents
-- [Introduction](#redhat-codeready-dependency-analysis)
+- [Introduction](#red-hat-codeready-dependency-analysis)
 - [How To Use The Plugin](#how-to-use-the-plugin)
   - [Admin Steps](#admin-steps)
     - [Generate CRDA Key](#1-generate-crda-key)
@@ -19,8 +19,8 @@
   - [1. Via CLI](#1-via-cli)
   - [2. Via CRDA Stack Report UI](#2-via-crda-stack-report-ui)
 
-# Redhat Codeready Dependency Analysis
-Readhat codeready dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA (codeready dependency analytics) is powered by **Snyk Intel Vulnerability DB**, which is the most advanced and accurate open source vulnerability database in the industry. It adds value with the latest, fastest and more number of vulnerabilities derived from numerous sources.
+# Red Hat Codeready Dependency Analysis
+Red Hat codeready dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA (codeready dependency analytics) is powered by **Snyk Intel Vulnerability DB**, which is the most advanced and accurate open source vulnerability database in the industry. It adds value with the latest, fastest and more number of vulnerabilities derived from numerous sources.
 
 'CRDA Report' with Insights about your application dependencies:
 - Flags a security vulnerability(CVE) and suggests a remedial version
