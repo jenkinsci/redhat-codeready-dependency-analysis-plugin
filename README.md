@@ -1,4 +1,23 @@
 ![openshift](https://user-images.githubusercontent.com/37098367/114392384-522d8480-9bb6-11eb-8cd8-cdc6191f6a79.png)
+***
+
+# Table of Contents
+- [Introduction](#redhat-codeready-dependency-analysis)
+- [How To Use The Plugin](#how-to-use-the-plugin)
+  - [Admin Steps](#admin-steps)
+    - [Generate CRDA Key](#1-generate-crda-key)
+    - [Install The Plugin](#2-install-the-redhat-codeready-dependency-analysis-jenkins-plugin)
+    - [CRDA Credentials](#3-crda-credentials)
+    - [Configuration](#4-configuration)
+      - [1. Build Step](#option-i--as-a-build-step)
+      - [2. Pipeline Task](#option-ii--as-a-pipeline-task)
+- [Results](#results)
+  - [1. Console Output](#1-console-output)
+  - [2. CRDA Stack Report](#2-crda-stack-report)
+  - [3. Detailed CRDA Stack Report](#3-detailed-crda-stack-report)
+- [Snyk Registration](#snyk-registration)
+  - [1. Via CLI](#1-via-cli)
+  - [2. Via CRDA Stack Report UI](#2-via-crda-stack-report-ui)
 
 # Redhat Codeready Dependency Analysis
 Readhat codeready dependency analysis is a jenkins plugin developed by **Red Hat Inc**. CRDA (codeready dependency analytics) is powered by **Snyk Intel Vulnerability DB**, which is the most advanced and accurate open source vulnerability database in the industry. It adds value with the latest, fastest and more number of vulnerabilities derived from numerous sources.
@@ -13,7 +32,7 @@ The plugin can be used in jenkins as a pipeline task or as a build step.
 
 ## How to use the plugin
 ### Admin Steps
-### 1.  Generate CRDA Key
+### 1. Generate CRDA Key
 - Download the CRDA CLI tool on your system. Click [here](https://github.com/fabric8-analytics/cli-tools/releases "here") to download.
 - Follow the instructions for the installation and run `crda auth` command to generate the crda key. Copy this key.
 - Compatible CLI versions >= v0.2.0
@@ -31,7 +50,7 @@ The plugin can be used in jenkins as a pipeline task or as a build step.
 - Give some description for the identification of the credentials.
 ![Screenshot from 2021-04-08 13-37-05](https://user-images.githubusercontent.com/37098367/114042617-361ea000-98a3-11eb-9740-6849b9d7593b.png)
 
-### 4- Configuration
+### 4. Configuration
 #### Option I- As a build step
 - Click on Configure -> Build Trigger -> Add Build Step. Select `Invoke Red Hat Codeready Dependency Analysis (CRDA)`.
 - Filepath (Mandatory): Provide the filepath for the manifest file. We currently support the following
