@@ -51,6 +51,7 @@ import redhat.jenkins.plugins.crda.action.CRDAAction;
 import redhat.jenkins.plugins.crda.task.CRDABuilder.BuilderDescriptorImpl;
 import redhat.jenkins.plugins.crda.utils.Config;
 import redhat.jenkins.plugins.crda.utils.Utils;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 public final class CRDAStep extends Step {
     private String file;
@@ -159,6 +160,16 @@ public final class CRDAStep extends Step {
             	}
             	else {
             		cliVersion = cliVersion.replace("v", "");
+            		DefaultArtifactVersion cli = new DefaultArtifactVersion(cliVersion);
+            		DefaultArtifactVersion cliDef = new DefaultArtifactVersion(Config.DEFAULT_CLI_VERSION);
+            		DefaultArtifactVersion cliCompatible = new DefaultArtifactVersion("0.2.0");
+            		if (cli.compareTo(cliCompatible) <0 ) {
+            			logger.println("The cli version provided is older than the compatible version. Will proceed with the default value " + Config.DEFAULT_CLI_VERSION);
+            			cliVersion = Config.DEFAULT_CLI_VERSION;
+            		} else if (cli.compareTo(cliCompatible) >=0 && cli.compareTo(cliDef) <0 ) {
+            			logger.println("Please consider upgrading the cli version to " + Config.DEFAULT_CLI_VERSION);
+            		}
+            		
             	}
             }            
             
@@ -191,7 +202,7 @@ public final class CRDAStep extends Step {
 	            logger.println("\t" + key.replace("_", " ") + " : " + res.get(key));
 	        }
 	        
-	        logger.println("Click on the CRDA Stack Report icon to view the detailed report.");
+	        logger.println("Click on the CRDA Stack Report icon to view the detailed report");
             
             Run run = getContext().get(Run.class);
             run.addAction(new CRDAAction(crdaUuid, res));

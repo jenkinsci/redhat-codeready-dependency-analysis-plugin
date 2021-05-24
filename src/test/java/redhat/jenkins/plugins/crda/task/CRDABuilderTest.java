@@ -46,7 +46,7 @@ public class CRDABuilderTest {
         project.getBuildersList().add(crdb);
         FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
         jenkins.assertLogContains("----- CRDA Analysis Begins -----", build);
-        jenkins.assertLogContains("Click on the CRDA Stack Report icon to view the detailed report.", build);
+        jenkins.assertLogContains("Click on the CRDA Stack Report icon to view the detailed report", build);
         jenkins.assertLogContains("----- CRDA Analysis Ends -----", build);
     }
 }

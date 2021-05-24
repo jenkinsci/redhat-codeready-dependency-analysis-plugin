@@ -51,6 +51,7 @@ import redhat.jenkins.plugins.crda.action.CRDAAction;
 import redhat.jenkins.plugins.crda.utils.Config;
 import redhat.jenkins.plugins.crda.utils.Utils;
 import redhat.jenkins.plugins.crda.credentials.CRDAKey;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
 public class CRDABuilder extends Builder implements SimpleBuildStep {
 
@@ -115,11 +116,17 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
         }
         if (cliVersion.startsWith("v")) {
         	cliVersion = cliVersion.replace("v", "");
+        	DefaultArtifactVersion cli = new DefaultArtifactVersion(cliVersion);
+    		DefaultArtifactVersion cliDef = new DefaultArtifactVersion(Config.DEFAULT_CLI_VERSION);
+    		
+    		if (cli.compareTo(cliDef) <0 ) {
+    			logger.println("Please consider upgrading the cli version to " + Config.DEFAULT_CLI_VERSION);
+    		}
         }
         
         String baseDir = Utils.doInstall(cliVersion, logger);
         if (baseDir.equals("Failed")) {
-        	logger.println("Error during installation process.");
+        	logger.println("Error during installation process");
         	return;
         }
         
@@ -147,7 +154,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
 	            logger.println("\t" + key.replace("_", " ") + " : " + res.get(key));
 	        }
 	        
-	        logger.println("Click on the CRDA Stack Report icon to view the detailed report.");
+	        logger.println("Click on the CRDA Stack Report icon to view the detailed report");
 	        logger.println("----- CRDA Analysis Ends -----");
 	        run.addAction(new CRDAAction(crdaUuid, res));
         }
@@ -186,6 +193,12 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
             if (!Utils.urlExists(Config.CLI_URL.replace("version", cliVersion))) {
             	return FormValidation.error(Messages.CRDABuilder_DescriptorImpl_errors_incorrectCli());
         	}
+            
+            DefaultArtifactVersion cli = new DefaultArtifactVersion(cliVersion.replace("v", ""));
+            DefaultArtifactVersion cliCompatible = new DefaultArtifactVersion("0.2.0");
+    		if (cli.compareTo(cliCompatible) <0 ) {
+    			return FormValidation.error(Messages.CRDABuilder_DescriptorImpl_errors_oldCli());
+    		}
         	return FormValidation.ok();        	
         }
         

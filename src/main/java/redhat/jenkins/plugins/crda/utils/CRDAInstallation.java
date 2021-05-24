@@ -107,16 +107,17 @@ public class CRDAInstallation {
 	}
 	
 	private Boolean isVersionCorrect(String fileLoc, String cliVersion, PrintStream logger) {
+		logger.println("Checking current CLI version in the system");
 		String results = new CommandExecutor().execute(Config.CLI_VERSION_CMD.replace("crda", fileLoc), logger);
 		Pattern pattern = Pattern.compile("^v[0-9]+\\.[0-9]+\\.[0-9]+.*", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(results);
 		if(matcher.find()) {
 			String curVer = results.split("-")[0].replace("v", "");
 			if (curVer.startsWith(cliVersion)) {
-				logger.println("CRDA CLI version is up to date as per the requirement " + cliVersion);
+				logger.println("CRDA CLI version in the system is up to date as per the requirement " + cliVersion);
 				return true;
 			}			
-			logger.println("CRDA CLI version " + curVer + " is currently installed. Will be updated with " + cliVersion);
+			logger.println("CRDA CLI version " + curVer + " is currently installed. Will be changed to " + cliVersion);
 			return false;
 		}
 		logger.println("Cannot verify current installed CRDA CLI version");
@@ -161,10 +162,10 @@ public class CRDAInstallation {
 				Boolean success = cr.downloadFile(url, fileLoc, fileZip, logger);
 				if (success) {
 					cr.extractArtifact(fileLoc, fileZip);
-					logger.println("Installation of CRDA CLI finished.");
+					logger.println("Installation of CRDA CLI finished");
 				}
 				else {
-					logger.println("Download step for CRDA CLI failed.");
+					logger.println("Download step for CRDA CLI failed");
 					return "Failed";
 				}
 			} catch (IOException e) {
@@ -175,7 +176,7 @@ public class CRDAInstallation {
 			}
 		}
 		else {
-			logger.println("CRDA CLI already installed.Ready to use.");
+			logger.println("CRDA CLI is ready to be used");
 		}		
 		return fileLoc + File.separator;
 	}
