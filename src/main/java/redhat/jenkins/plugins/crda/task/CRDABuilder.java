@@ -35,7 +35,7 @@ import org.kohsuke.stapler.AncestorInPath;
 import hudson.model.Item;
 import jenkins.model.Jenkins;
 import hudson.security.ACL;
-
+import hudson.EnvVars;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -105,9 +105,10 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
     } 
 
     @Override
-    public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+    public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
     	PrintStream logger = listener.getLogger();
     	logger.println("----- CRDA Analysis Begins -----");
+    	String jenkinsPath = env.get("PATH");
     	String crdaUuid = Utils.getCRDACredential(this.getCrdaKeyId());
         String cliVersion = this.getCliVersion();
         if (cliVersion == null) {
@@ -135,6 +136,7 @@ public class CRDABuilder extends Builder implements SimpleBuildStep {
         logger.println("Contribution towards anonymous usage stats is set to " + this.getConsentTelemetry());
         logger.println("Analysis Begins");        
         Map<String, String> envs = new HashMap<>();
+        envs.put("PATH", jenkinsPath);
         envs.put("CRDA_KEY", crdaUuid);
         envs.put("CONSENT_TELEMETRY", String.valueOf(this.getConsentTelemetry()));
         String results = Utils.doExecute(cmd, logger, envs);        
