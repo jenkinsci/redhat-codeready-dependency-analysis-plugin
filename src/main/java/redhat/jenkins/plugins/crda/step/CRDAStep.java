@@ -41,6 +41,7 @@ import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 
 import hudson.Extension;
+import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.model.Item;
 import hudson.model.Run;
@@ -116,10 +117,17 @@ public final class CRDAStep extends Step {
     public static class Execution extends SynchronousNonBlockingStepExecution<String> {
 
         private transient final CRDAStep step;
+        private String jenkinsPath;
 
         protected Execution(CRDAStep step, StepContext context) {
             super(context);
             this.step = step;
+            try {
+            	EnvVars envVars = context.get(EnvVars.class);
+            	jenkinsPath = envVars.get("PATH");
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
+			}
         }
 
         @Override
@@ -182,6 +190,7 @@ public final class CRDAStep extends Step {
             logger.println("Analysis Begins");
             Map<String, String> envs = new HashMap<>();
             envs.put("CRDA_KEY", crdaUuid);
+            envs.put("PATH", jenkinsPath);            
             envs.put("CONSENT_TELEMETRY", String.valueOf(step.getConsentTelemetry()));
             String results = Utils.doExecute(cmd, logger, envs);
             
