@@ -37,9 +37,9 @@ The plugin can be used in jenkins as a pipeline task or as a build step.
 - Follow the instructions for the installation and run `crda auth` command to generate the crda key. Copy this key.
 - Compatible CLI versions
 
-| Plugin Version | Cli Version |
-|----------------|-------------|
-|[0.1.0, 0.1.2]  |  v0.2.2     |
+| Plugin Version     | Cli Version |
+|--------------------|-------------|
+|[0.1.0, 0.1.2]      |  v0.2.3     |
 
 ### 2. Install the redhat-codeready-dependency-analysis jenkins plugin
 - Goto the jenkins dashboard -> Manage Jenkins -> Manage Plugins.
@@ -55,6 +55,7 @@ The plugin can be used in jenkins as a pipeline task or as a build step.
 ![Screenshot from 2021-04-08 13-37-05](https://user-images.githubusercontent.com/37098367/114042617-361ea000-98a3-11eb-9740-6849b9d7593b.png)
 
 ### 4. Configuration
+Make sure that the Path is updated to point to the corresponding executables, like mvn, pip etc.
 #### Option I- As a build step
 - Click on Configure -> Build Trigger -> Add Build Step. Select `Invoke Red Hat Codeready Dependency Analysis (CRDA)`.
 - Filepath (Mandatory): Provide the filepath for the manifest file. We currently support the following
